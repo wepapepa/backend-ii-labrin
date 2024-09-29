@@ -10,7 +10,7 @@ router.get("/", [passportCall('current'), checkAdmin], controller.getAll);
 router.get("/:id", [passportCall('current')], controller.getById);
 router.post("/", [passportCall('current'), checkAdmin], controller.create);
 router.put("/:id", [passportCall('current'), checkAdmin], controller.update);
-router.delete("/:id", [passportCall('current'), checkAdmin], controller.remove);
+router.delete("/:id", [passportCall('current'), checkAdmin], controller.delete);
 
 router.post("/:idCart/products/:idProd", [passportCall('current')], controller.addProdToCart);
 router.delete("/:idCart/products/:idProd",[passportCall('current')], controller.removeProdToCart);

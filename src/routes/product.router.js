@@ -12,6 +12,6 @@ router.get('/:id', [passportCall('current')], controller.getById);
 
 Router.post('/', [passportCall('current'), checkAdmin], controller.create);
 Router.put('/:id', [passportCall('current'), checkAdmin], controller.update);
-Router.delete('/:id', [passportCall('current'), checkAdmin], controller.remove);
+Router.delete('/:id', [passportCall('current'), checkAdmin], controller.delete);
 
 export default router;

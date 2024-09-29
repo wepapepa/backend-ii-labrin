@@ -1,64 +1,32 @@
-import Controllers from "./class.controller.js";
-import CartService from '../services/cart.services.js';
-import { createResponse } from "../utils.js";
+import "dotenv/config";
+import express, { json, urlencoded } from "express";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
+import "./passport/jwt.js";
+import { errorHandler } from "./middleweares/errorHandler.js";
+import { initMongoDB } from "./db/connection.js";  
+import MainRouter from "./routesindex.js";
 
-const cartService = new CartService();
 
-export default class CartController extends Controllers{
-    constructor() {
-        super(cartService)
-    }
+const mainRouter = new MainRouter();
 
-    addProdToCart = async (req, res, next) => {
+const app = express();
 
-        try {
-            const { cart } = req.user;
-            const { idProd } = req.params;
-            const newProdToUserCart = await this.service.addProdToCart(cart, idProd);
+app
+    .use(json())
+    .use(urlencoded({ extended: true }))
+    .use(morgan("dev"))
+    .use(cookieParser())
+    .use("api", mainRouter.getRouter())
+    .use(errorHandler);
 
-            if (!newProdToUserCart) createResponse(req, res, 404, { msg: "Error al añadir producto al carrito :( "});
-            else createResponse(res, 200, newProdToUserCart);
-        } catch (error) {
-            next(error);
-        }
-    };
+initMongoDB()
+    .then(() => console.log("base de datos conectada correctamente"))
+    .catch((error) => console.log(error));
 
-    removeProdToCart = async (req, res, next) => {
-        try {
-            const { idCart } = req.params;
-            const { idProd } = req.params;
-            const delProdToUserCart = await this.service.removeProdToCart(idCart, idProd);
-            if (!delProdToUserCart) createResponse(res, 404, { msg: "Error al borrar producto del carrito :( "});
-            else createResponse(res, 200, { msg: 'Producto ${idProd} borrado del carrito :D'});
-        } catch (error) {
-            next(error);
-        }
-    };
+const PORT = process.env.PORT || 8080;
 
-    updateProdQuantityToCart = async (req, res, next) => {
-        try {
-            const { idCart } = req.params;
-            const { idProd } = req.params;
-            const { quantity } = req.body;
-            const updateProdQuantity = await this.service.updateProdQuantityToCart(idCart, idProd, quantity);
+app.listen(PORT, () => console.log( `servidor corriendo en el PORT: ${PORT}`));
+    
 
-            if (!updateProdQuantity) createResponse(res, 404, { msg: "Error al actualizar la cantidad del carrito :( "});
-            else createResponse(res, 200, updateProdQuantity);
-        } catch (error) {
-            next(error);
-        }
-    };
 
-    clearCart = async (req, res, next) => {
-
-        try {
-            const { idCart } = req.params;
-            const clearCart = await this.service.clearCart(idCart);
-            
-            if (!clearCart) createResponse(res, 404, { msg: "Error al borrar el carrito :( "});
-            else createResponse(res, 200, clearCart);
-        } catch (error) {   
-            next(error);
-        }
-    };
-}

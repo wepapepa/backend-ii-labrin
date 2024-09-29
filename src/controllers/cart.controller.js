@@ -29,7 +29,7 @@ export default class CartController extends Controllers{
             const { idProd } = req.params;
             const delProdToUserCart = await this.service.removeProdToCart(idCart, idProd);
             if (!delProdToUserCart) createResponse(res, 404, { msg: "Error al borrar producto del carrito :( "});
-            else createResponse(res, 200, { msg: 'Producto ${idProd} borrado del carrito :D'});
+            else createResponse(res, 200, { msg: `Producto ${idProd} borrado del carrito :D`});
         } catch (error) {
             next(error);
         }
