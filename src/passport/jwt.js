@@ -10,3 +10,32 @@ const verifyToken = async (jwt_payload, done) => {
     return done(null, jwt_payload);
 };
 
+const cookieExtractor = (req) => {
+    const token = req.cookies.token;
+    console.log("cookie---->", token);
+    return token;
+};
+
+const strategyConfigCookies = {
+    jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+    secretOrKey: SECRET_KEY,
+};
+
+passport.use("current", new jwtStrategy(strategyConfigCookies, verifyToken));
+
+passport.serializeUser((user,done) => {
+    try {
+        done (null, user.userId);
+    } catch (error) {
+        return done(error);
+    }
+});
+
+passport.deserializeUser(async (id, done) =>{
+    try {
+        const user = await userService.getById(id);
+        return done(null, user);
+    } catch (error) {
+        return done(error);
+    }
+});
