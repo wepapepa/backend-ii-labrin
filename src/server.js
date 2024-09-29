@@ -3,7 +3,7 @@ import express, { json, urlencoded } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import "./passport/jwt.js";
-import { errorHandler } from "./middleweares/errorHandler.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./db/connection.js";  
 import MainRouter from "./routesindex.js";
 
@@ -28,5 +28,3 @@ const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => console.log( `servidor corriendo en el PORT: ${PORT}`));
     
-
-
