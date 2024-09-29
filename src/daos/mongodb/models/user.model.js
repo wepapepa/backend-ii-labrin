@@ -14,5 +14,36 @@ const usersSchema = new Schema({
         required: true,
         unique: true,
     },
-    
-})
+    age: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    role: {
+        type: String,
+        default: "user",
+    },
+    isGitHub: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+    isGoogle: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
+    cart: {
+        type: Schema.Types.ObjectId,
+        ref: "carts",
+        default: null
+    }
+
+});
+
+const userColl = "users";
+export const UserModel = model(userColl, usersSchema);
