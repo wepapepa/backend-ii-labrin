@@ -2,7 +2,7 @@ import "dotenv/config";
 import express, { json, urlencoded } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import "./passport/jwt.js";
+import "./passport/jwt.js"; //inicializa la estrategia
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./db/connection.js";  
 import MainRouter from "./routesindex.js";
@@ -16,7 +16,7 @@ app
     .use(json())
     .use(urlencoded({ extended: true }))
     .use(morgan("dev"))
-    .use(cookieParser())
+    .use(cookieParser())//da acceso a las cookies
     .use("api", mainRouter.getRouter())
     .use(errorHandler);
 
