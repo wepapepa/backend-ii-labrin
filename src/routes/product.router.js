@@ -1,7 +1,7 @@
 import { Router } from "express";
 import ProductController from "../controllers/product.controllers.js";
 import { checkAdmin } from "../middlewares/checkAdmin.js";
-import { passportCall } from "../passpprt/passportCall.js";
+import { passportCall } from "../passport/passportCall.js";
 
 const controller = new ProductController()
 

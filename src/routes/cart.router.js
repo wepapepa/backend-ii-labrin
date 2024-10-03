@@ -1,7 +1,7 @@
 import { Router } from "express";
-import CartController from 'c../controllers/cart.controllers.js';
+import CartController from '../controllers/cart.controller.js';
 import { checkAdmin } from "../middlewares/checkAdmin.js";
-import { passportCall } from "../middlewares/passportCall.js";
+import { passportCall } from "../passport/passportCall.js";
 const controller = new CartController();
 
 const router = Router();

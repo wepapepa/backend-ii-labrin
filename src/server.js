@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import "./passport/jwt.js"; //inicializa la estrategia
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./db/connection.js";  
-import MainRouter from "./routesindex.js";
+import MainRouter from "./routes/index.js";
 
 
 const mainRouter = new MainRouter();
