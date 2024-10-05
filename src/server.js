@@ -1,12 +1,14 @@
 import "dotenv/config";
+import dotenv from "dotenv";
 import express, { json, urlencoded } from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import "./passport/jwt.js"; //inicializa la estrategia
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { initMongoDB } from "./db/connection.js";  
-import MainRouter from "./routesindex.js";
+import MainRouter from "./routes/index.js";
 
+dotenv.config();
 
 const mainRouter = new MainRouter();
 

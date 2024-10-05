@@ -1,9 +1,13 @@
 import passport from "passport";
 import { ExtractJwt, Strategy as jwtStrategy } from "passport-jwt";
 import UserService from "../services/user.services.js";
+
+console.log("JWT Secret Key:", process.env.SECRET_KEY_JWT);
+
+
 const userService = new UserService();
 
-const SECRET_KEY = process.env.SECRET_KEY;
+const SECRET_KEY_JWT = process.env.SECRET_KEY_JWT;
 
 const verifyToken = async (jwt_payload, done) => {
     if (!jwt_payload) return done(null, false, { messages: "usuario no encontrado :("});
@@ -18,7 +22,7 @@ const cookieExtractor = (req) => {
 
 const strategyConfigCookies = {
     jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
-    secretOrKey: SECRET_KEY,
+    secretOrKey: SECRET_KEY_JWT, //me lanza undefined
 };
 
 passport.use("current", new jwtStrategy(strategyConfigCookies, verifyToken));
