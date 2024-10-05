@@ -10,9 +10,9 @@ export default class MainRouter {
     }
 
     init() {
-        this.router.use('/products', productRouter);
-        this.router.use('/users', userRouter);
-        this.router.use('/carts', cartRouter); 
+        this.router.use("/products", productRouter);
+        this.router.use("/users", userRouter);
+        this.router.use("/carts", cartRouter); 
     }
 
     getRouter() {
